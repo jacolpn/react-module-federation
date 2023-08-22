@@ -1,7 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
-const { __dirname } = require('path');
 
 module.exports = {
     entry: './src/index.js',
@@ -11,10 +10,16 @@ module.exports = {
         publicPath: 'http://localhost:9001'
     },
     devServer: {
-        contentBase: path.resolve(__dirname, './dist'),
-        index: 'index.html',
+        static: path.join(__dirname, 'public/'),
+        devMiddleware: {
+            publicPath: '/dist/'
+        },
         port: 9001,
-        historyFallbackApi: true
+        hot: "only"
+        // contentBase: path.resolve(__dirname, './dist'),
+        // index: 'index.html',
+        // port: 9001,
+        // historyApiFallback: true
     },
     resolve: {
         extensions: ['.jsx', '.js', '.json']
